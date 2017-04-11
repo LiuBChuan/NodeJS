@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="../demo.css" />
+        <title>vue练习</title>
+    </head>
+    <body>
+        <div id="app">
+            <div id="searchBar">
+                查询 <input type="text" v-model="searchQuery" />
+            </div>
+            <br />
+            <simple-grid :data="filterData" :columns="gridColumns" :filter-key="searchQuery"></simple-grid>
+
+        </div>
+
+        <template id="grid-template">
+            <table>
+                <thead>
+                    <tr>
+                        <th v-for="col in columns">
+                            {{ col | capitalize }}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="entry in data">
+                        <td v-for="col in columns">
+                            {{ entry[col] }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </template>
+    </body>
+
+    <script src="../vue.min.js"></script>
+    <script>
+        Vue.filter('capitalize', function(value) {
+            if (!value) { return ''}
+            value = value.toString();
+            return value.charAt(0).toUpperCase() + value.slice(1);
+        })
+
+        Vue.component('simple-grid', {
+            template: '#grid-template',
+            props: {
+                data: Array,
+                columns: Array,
+                filterKey: String
+            }
+        })
+
+        new Vue({
+            el: '#app',
+            data: {
+                searchQuery: '',
+                gridColumns: ['name', 'age', 'sex'],
+                gridData: [{
+                    name: 'Jack',
+                    age: 30,
+                    sex: 'Male'
+                }, {
+                    name: 'Bill',
+                    age: 26,
+                    sex: 'Male'
+                }, {
+                    name: 'Tracy',
+                    age: 22,
+                    sex: 'Female'
+                }, {
+                    name: 'Chris',
+                    age: 36,
+                    sex: 'Male'
+                }]
+            },
+            computed:{
+                filterData: function(){
+                    var searchQuery = this.searchQuery;
+                    var gridData = this.gridData;
+                    return gridData.filter(function(item){
+                        for (var i in item) {
+                            if ((item[i] + "").toLowerCase().indexOf(searchQuery.toLowerCase()) != -1) {
+                                return true;
+                            }
+                        }
+                        return false;
+                    })
+                }
+            }
+        })
+    </script>
+</html>

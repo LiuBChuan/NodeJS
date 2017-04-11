@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="../demo.css" />
+        <title>vue练习</title>
+    </head>
+    <body>
+        <div id="app">
+            <my-component>
+                <h1>Hello Vue.js 2.0</h1>
+            </my-component>
+
+            <my-component>
+            </my-component>
+        </div>
+
+        <template id="myTemponent">
+            <div class="content">
+                <h2>This is a component!</h2>
+                <slot>如果有分发内容，则显示分发内容</slot>
+                <slot>如果没有分发内容，则显示本条信息...</slot>
+                <p>Say Something ... </p>
+            </div>
+        </template>
+    </body>
+
+    <script src="../vue.min.js"></script>
+    <script>
+        Vue.component('my-component', {
+            template: '#myTemponent'
+        })
+
+        new Vue({
+            el: '#app'
+        })
+    </script>
+</html>

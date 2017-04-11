@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="../demo.css" />
+        <title>vue练习</title>
+    </head>
+    <body>
+        <div id="app">
+            <table>
+                <tr>
+                    <th colspan="3">父组件数据</th>
+                </tr>
+                <tr>
+                    <td>名称</td>
+                    <td>{{ name }}</td>
+                    <td><input type="text" v-model="name" /></td>
+                </tr>
+                <tr>
+                    <td>年龄</td>
+                    <td>{{ age }}</td>
+                    <td><input type="text" v-model="age" /></td>
+                </tr>
+            </table>
+
+            <my-component v-bind:my-name="name" v-bind:my-age="age"></my-component>
+
+        </div>
+
+        <template id="myComponent">
+            <table>
+                <tr>
+                    <th colspan="3">子组件数据</th>
+                </tr>
+                <tr>
+                    <td>我的名称</td>
+                    <td>{{ myName }}</td>
+                    <td><input type="text" v-model="myName" /></td>
+                </tr>
+                <tr>
+                    <td>我的年龄</td>
+                    <td>{{ myAge }}</td>
+                    <td><input type="text" v-model="myAge" /></td>
+                </tr>
+            </table>
+        </template>
+    </body>
+
+    <script src="../vue.min.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                name: 'Jack',
+                age: 26
+            },
+            components: {
+                'my-component': {
+                    template: '#myComponent',
+                    props: ['myName', 'myAge']
+                }
+            }
+        })
+    </script>
+</html>

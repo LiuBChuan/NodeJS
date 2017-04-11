@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <div id="app">
+            <my-component></my-component>
+            <my-component1></my-component1>
+        </div>
+        <div id="app2">
+            <my-component2></my-component2>
+        </div>
+
+        <template id="myComponent">
+            <div>This is my component!</div>
+        </template>
+    </body>
+
+    <script src="../vue.min.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            components: {
+                'my-component': {
+                    template: '#myComponent'
+                },
+                'my-component1': {
+                    template: '#myComponent'
+                }
+            }            
+        })
+
+        Vue.component('my-component2', {
+            template: '<h4>This is a global define component!<h4>'
+        })
+        new Vue({
+            el: '#app2'
+        })
+    </script>
+</html>
